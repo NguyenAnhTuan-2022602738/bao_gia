@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Company - Premium Products Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .company-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .company-logo:hover {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            transform: translateY(-100%);
+        }
+
+        .navbar.show {
+            transform: translateY(0);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 100px 0;
+            background: #f8f9ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 12px 30px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .product-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .product-unit {
+            background: #ecf0f1;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-contact {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ff6b6b;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #34495e;
+            opacity: 0.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .filter-tabs {
+                gap: 5px;
+            }
+
+            .filter-tab {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" id="navLogo">ABC</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Trang chủ</a></li>
+                <li><a href="#portfolio">Sản phẩm</a></li>
+                <li><a href="#stats">Thống kê</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="company-logo" id="companyLogo">ABC</div>
+            <h1 id="companyName">ABC COMPANY</h1>
+            <p>Chuyên cung cấp sản phẩm chất lượng cao với thiết kế hiện đại</p>
+            <div class="cta-buttons">
+                <a href="#portfolio" class="btn btn-primary">Xem sản phẩm</a>
+                <a href="#contact" class="btn btn-secondary">Liên hệ ngay</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div style="font-size: 2rem;">↓</div>
+            <div>Cuộn xuống</div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Danh Mục Sản Phẩm</h2>
+            <p class="section-subtitle">Khám phá bộ sưu tập sản phẩm đa dạng và chất lượng cao của chúng tôi</p>
+            
+            <!-- Filter Tabs -->
+            <div class="filter-tabs" id="filterTabs">
+                <div class="filter-tab active" data-category="all">Tất cả</div>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div>Đang tải sản phẩm...</div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be rendered here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalProducts">0</div>
+                    <div class="stat-label">Sản phẩm</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCategories">0</div>
+                    <div class="stat-label">Danh mục</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="happyClients">500+</div>
+                    <div class="stat-label">Khách hàng</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="yearsExp">10+</div>
+                    <div class="stat-label">Năm kinh nghiệm</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ABC Company</h3>
+                    <p>Chúng tôi cam kết mang đến những sản phẩm chất lượng cao nhất với dịch vụ tận tâm.</p>
+                    <p><strong>📞 Hotline:</strong> 1900-123-456</p>
+                    <p><strong>📧 Email:</strong> info@abccompany.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Danh mục sản phẩm</h3>
+                    <ul id="footerCategories">
+                        <!-- Categories will be populated here -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Thông tin</h3>
+                    <ul>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Chính sách bảo hành</a></li>
+                        <li><a href="#">Hướng dẫn mua hàng</a></li>
+                        <li><a href="#">Chính sách đổi trả</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kết nối với chúng tôi</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ABC Company. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample products data
+        let products = [
+            { id: 1, category: "Điện tử", name: "Laptop Dell Inspiron 15", unit: "Chiếc", price: 15000000, icon: "💻" },
+            { id: 2, category: "Điện tử", name: "iPhone 14 Pro Max", unit: "Chiếc", price: 28000000, icon: "📱" },
+            { id: 3, category: "Gia dụng", name: "Tủ lạnh Samsung 300L", unit: "Chiếc", price: 8500000, icon: "❄️" },
+            { id: 4, category: "Gia dụng", name: "Máy giặt LG 9kg", unit: "Chiếc", price: 7200000, icon: "🌊" },
+            { id: 5, category: "Thời trang", name: "Áo sơ mi nam", unit: "Cái", price: 350000, icon: "👔" },
+            { id: 6, category: "Thời trang", name: "Giày thể thao Nike", unit: "Đôi", price: 2500000, icon: "👟" },
+            { id: 7, category: "Sách", name: "Sách lập trình JavaScript", unit: "Cuốn", price: 250000, icon: "📚" },
+            { id: 8, category: "Sách", name: "Từ điển Anh-Việt", unit: "Cuốn", price: 180000, icon: "📖" },
+            { id: 9, category: "Điện tử", name: "Tai nghe Sony WH-1000XM4", unit: "Chiếc", price: 7500000, icon: "🎧" },
+            { id: 10, category: "Gia dụng", name: "Nồi cơm điện Panasonic", unit: "Chiếc", price: 1200000, icon: "🍚" },
+            { id: 11, category: "Thời trang", name: "Túi xách Louis Vuitton", unit: "Cái", price: 5000000, icon: "👜" },
+            { id: 12, category: "Sách", name: "Combo sách kinh doanh", unit: "Bộ", price: 450000, icon: "📊" }
+        ];
+
+        let currentFilter = 'all';
+        let filteredProducts = [...products];
+
+        // Format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        // Get unique categories
+        function getCategories() {
+            return [...new Set(products.map(p => p.category))];
+        }
+
+        // Render filter tabs
+        function renderFilterTabs() {
+            const filterTabs = document.getElementById('filterTabs');
+            const categories = getCategories();
+            
+            filterTabs.innerHTML = '<div class="filter-tab active" data-category="all">Tất cả</div>';
+            categories.forEach(category => {
+                filterTabs.innerHTML += `<div class="filter-tab" data-category="${category}">${category}</div>`;
+            });
+
+            // Add event listeners
+            filterTabs.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-tab')) {
+                    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.category;
+                    filterProducts();
+                }
+            });
+        }
+
+        // Filter products
+        function filterProducts() {
+            if (currentFilter === 'all') {
+                filteredProducts = [...products];
+            } else {
+                filteredProducts = products.filter(p => p.category === currentFilter);
+            }
+            renderProducts();
+        }
+
+        // Render products
+        function renderProducts() {
+            const productGrid = document.getElementById('productGrid');
+            const loading = document.getElementById('loading');
+            
+            // Show loading
+            loading.classList.add('show');
+            productGrid.innerHTML = '';
+
+            setTimeout(() => {
+                loading.classList.remove('show');
+                
+                filteredProducts.forEach((product, index) => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image">
+                            <span style="position: relative; z-index: 2;">${product.icon}</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">${product.category}</div>
+                            <h3 class="product-name">${product.name}</h3>
+                            <div class="product-details">
+                                <span class="product-unit">${product.unit}</span>
+                                <span class="product-price">${formatPrice(product.price)}</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-small btn-view" onclick="viewProduct(${product.id})">
+                                    Xem chi tiết
+                                </button>
+                                <button class="btn-small btn-contact" onclick="contactProduct(${product.id})">
+                                    Liên hệ
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    productGrid.appendChild(productCard);
+                    
+                    // Animate cards
+                    setTimeout(() => {
+                        productCard.classList.add('show');
+                    }, index * 100);
+                });
+            }, 800);
+        }
+
+        // Update stats
+        function updateStats() {
+            const totalProducts = products.length;
+            const totalCategories = getCategories().length;
+            
+            document.getElementById('totalProducts').textContent = totalProducts;
+            document.getElementById('totalCategories').textContent = totalCategories;
+            
+            // Animate numbers
+            animateNumber('totalProducts', totalProducts);
+            animateNumber('totalCategories', totalCategories);
+        }
+
+        // Animate numbers
+        function animateNumber(id, target) {
+            const element = document.getElementById(id);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 30);
+        }
+
+        // Populate footer categories
+        function populateFooterCategories() {
+            const footerCategories = document.getElementById('footerCategories');
+            const categories = getCategories();
+            
+            footerCategories.innerHTML = categories.map(category => 
+                `<li><a href="#" onclick="filterByCategory('${category}')">${category}</a></li>`
+            ).join('');
+        }
+
+        // Filter by category from footer
+        function filterByCategory(category) {
+            document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.querySelectorAll('.filter-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.dataset.category === category) {
+                        tab.classList.add('active');
+                    }
+                });
+                currentFilter = category;
+                filterProducts();
+            }, 500);
+        }
+
+        // Product actions
+        function viewProduct(id) {
+            const product = products.find(p => p.id === id);
+            alert(`Xem chi tiết sản phẩm: ${product.name}\nGiá: ${formatPrice(product.price)}\nĐơn vị: ${product.unit}`);
+        }
+
+        function contactProduct(id) {
+            const product = products.find(p => p.id === id);
+            alert(`Liên hệ về sản phẩm: ${product.name}\nVui lòng gọi: 1900-123-456\nHoặc email: info@abccompany.com`);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('show');
+            } else {
+                navbar.classList.remove('show');
+            }
+        });
+
+        // Logo and company name editing
+        document.getElementById('companyLogo').addEventListener('click', () => {
+            const newLogo = prompt('Nhập logo mới (tối đa 3 ký tự):');
+            if (newLogo && newLogo.length <= 3) {
+                document.getElementById('companyLogo').textContent = newLogo.toUpperCase();
+                document.getElementById('navLogo').textContent = newLogo.toUpperCase();
+            }
+        });
+
+        document.getElementById('companyName').addEventListener('click', () => {
+            const newName = prompt('
