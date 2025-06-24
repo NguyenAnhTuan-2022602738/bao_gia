@@ -1,0 +1,530 @@
+doctype html
+html(lang="vi")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Báo Giá Đồ Cao Su - Quang Minh (#{priceTypeLabel})
+        style.
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                padding: 20px;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                backdrop-filter: blur(10px);
+            }
+
+            .header {
+                background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+                color: white;
+                padding: 30px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+                animation: rotate 20s linear infinite;
+            }
+
+            @keyframes rotate {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            .logo-section {
+                position: relative;
+                z-index: 2;
+                margin-bottom: 20px;
+            }
+
+            .logo {
+                width: 120px;
+                height: 120px;
+                background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+                border-radius: 50%;
+                margin: 0 auto 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                font-weight: bold;
+                color: white;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                transition: transform 0.3s ease;
+            }
+
+            .logo:hover {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            .company-name {
+                font-size: 2.5em;
+                font-weight: 700;
+                margin-bottom: 10px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+                position: relative;
+                z-index: 2;
+            }
+
+            .company-subtitle {
+                font-size: 1.2em;
+                opacity: 0.9;
+                position: relative;
+                z-index: 2;
+            }
+
+            .content {
+                padding: 40px;
+            }
+
+            .search-section {
+                margin-bottom: 30px;
+                display: flex;
+                gap: 15px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .search-input {
+                flex: 1;
+                min-width: 250px;
+                padding: 15px 20px;
+                border: 2px solid #e0e0e0;
+                border-radius: 50px;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            .search-input:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+                transform: translateY(-2px);
+            }
+
+            .filter-select {
+                padding: 15px 20px;
+                border: 2px solid #e0e0e0;
+                border-radius: 50px;
+                background: white;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .filter-select:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+
+            .table-container {
+                background: white;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                margin-top: 20px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            thead {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+
+            th {
+                padding: 20px 15px;
+                text-align: left;
+                font-weight: 600;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                position: relative;
+            }
+
+            th::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: rgba(255, 255, 255, 0.5);
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+
+            th:hover::after {
+                width: 80%;
+            }
+
+            tbody tr {
+                transition: all 0.3s ease;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            tbody tr:hover {
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            td {
+                padding: 15px;
+                vertical-align: middle;
+                font-size: 14px;
+            }
+
+            .stt {
+                font-weight: bold;
+                color: #667eea;
+                font-size: 16px;
+            }
+
+            .product-name {
+                font-weight: 600;
+                color: #2c3e50;
+            }
+
+            .price {
+                font-weight: bold;
+                color: #e74c3c;
+                font-size: 16px;
+            }
+
+            .group-tag {
+                display: inline-block;
+                padding: 5px 12px;
+                background: linear-gradient(135deg, #3498db, #2980b9);
+                color: white;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .unit {
+                background: #ecf0f1;
+                padding: 5px 10px;
+                border-radius: 15px;
+                color: #2c3e50;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .stats {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 30px;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            .stat-card {
+                flex: 1;
+                min-width: 200px;
+                background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+                color: white;
+                padding: 25px;
+                border-radius: 15px;
+                text-align: center;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .stat-number {
+                font-size: 2.5em;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .stat-label {
+                font-size: 1em;
+                opacity: 0.9;
+            }
+
+            @media (max-width: 768px) {
+                .container {
+                    margin: 10px;
+                    border-radius: 15px;
+                }
+
+                .content {
+                    padding: 20px;
+                }
+
+                .company-name {
+                    font-size: 2em;
+                }
+
+                .search-section {
+                    flex-direction: column;
+                }
+
+                .search-input, .filter-select {
+                    width: 100%;
+                }
+
+                table {
+                    font-size: 12px;
+                }
+
+                th, td {
+                    padding: 10px 8px;
+                }
+
+                .stats {
+                    flex-direction: column;
+                }
+            }
+
+            .loading {
+                text-align: center;
+                padding: 50px;
+                color: #667eea;
+                font-size: 18px;
+            }
+
+            .no-results {
+                text-align: center;
+                padding: 50px;
+                color: #95a5a6;
+                font-size: 16px;
+            }
+            .pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+                gap: 10px;
+            }
+            .pagination button {
+                padding: 10px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 50px;
+                background: white;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .pagination button:hover {
+                background: #667eea;
+                color: white;
+                border-color: #667eea;
+            }
+            .pagination button:disabled {
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+            .pagination span {
+                font-size: 16px;
+                font-weight: 500;
+                color: #2c3e50;
+            }
+            .search-button {
+                padding: 8px 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 50px;
+                background: white;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .search-button:hover {
+                background: #667eea;
+                color: white;
+                border-color: #667eea;
+            }
+    body
+        .container
+            .header
+                .logo-section
+                    .logo(id="companyLogo")
+                        img(src="https://res.cloudinary.com/dmpjioe8c/image/upload/v1750657283/file_png_qlmps6.png" alt="Logo" style="width: 70%; height: 70%; object-fit: cover;")
+                    h1.company-name(id="companyName") Phụ tùng xe máy Quang Minh
+                    p.company-subtitle Chuyên cung cấp sản phẩm chính hãng
+                    p.company-subtitle Hàng chuẩn - Giá tốt
+            .content
+                .stats
+                    .stat-card
+                        .stat-number(id="totalProducts") #{totalProducts}
+                        .stat-label Tổng sản phẩm
+                    .stat-card
+                        .stat-number(id="totalGroups") #{totalGroups}
+                        .stat-label Nhóm hàng
+                    .stat-card
+                        .stat-number(id="avgPrice") #{averagePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                        .stat-label Giá trung bình
+                .search-section
+                    form#filterForm(action=`/price/${priceType}` method="get" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;")
+                        input(type="text" name="search" id="searchInput" class="search-input" placeholder="Tìm kiếm sản phẩm..." value= searchTerm || '' onkeypress="if(event.key === 'Enter') document.getElementById('filterForm').submit();")
+                        button(type="submit" class="search-button") 🔍
+                        select(name="group" id="groupFilter" class="filter-select")
+                            option(value="") Tất cả nhóm hàng
+                            each group in allGroups || []
+                                option(value=group selected=(selectedGroup === group)) #{group}
+                .table-container
+                    table
+                        thead
+                            tr
+                                th STT
+                                th NHÓM HÀNG
+                                th TÊN HÀNG
+                                th ĐVT
+                                th ĐƠN GIÁ
+                        tbody#productTableBody
+                            if products.length === 0
+                                tr
+                                    td(colspan="5" class="no-results") Không tìm thấy sản phẩm nào
+                            else
+                                each product, index in products
+                                    tr
+                                        td.stt #{product.STT}
+                                        td
+                                            span.group-tag #{product['NHÓM HÀNG']}
+                                        td.product-name #{product['TÊN HÀNG']}
+                                        td
+                                            span.unit #{product.ĐVT || ''}
+                                        td.price #{(product[priceType] || 0).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                .pagination
+                    button(id="prevPage" disabled) Previous
+                    span Trang 
+                        span(id="currentPage") 1 
+                        | của 
+                        span(id="totalPages") #{Math.ceil(totalProducts / 5)}
+                    button(id="nextPage") Next
+    script.
+        let allProducts = !{JSON.stringify(products)};
+        let products = allProducts; // Sử dụng để phân trang
+        let priceType = "#{priceType}";
+        let currentPage = 1;
+        const limit = 5;
+        const totalPages = Math.ceil(allProducts.length / limit);
+
+        function normalizeKeys(obj) {
+            const keyMap = {
+                "stt": "STT",
+                "nhóm hàng": "NHÓM HÀNG",
+                "nhom hang": "NHÓM HÀNG",
+                "tên hàng": "TÊN HÀNG",
+                "ten hang": "TÊN HÀNG",
+                "dvt": "ĐVT",
+                "bbcl": "BBCL",
+                "bbpt": "BBPT",
+                "blvip": "BLVIP",
+                "bl": "BL"
+            };
+            const newObj = {};
+            Object.keys(obj).forEach(key => {
+                const normKey = key.trim().toLowerCase().replace(/\s+/g, ' ');
+                const mappedKey = keyMap[normKey] || key.trim().replace(/\s+/g, '');
+                newObj[mappedKey] = obj[key];
+            });
+            return newObj;
+        }
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        }
+
+        function paginateProducts() {
+            const start = (currentPage - 1) * limit;
+            const end = start + limit;
+            return products.slice(start, end);
+        }
+
+        function renderProducts() {
+            const tbody = document.getElementById('productTableBody');
+            const paginatedProducts = paginateProducts();
+            if (paginatedProducts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="no-results">Không tìm thấy sản phẩm nào</td></tr>';
+            } else {
+                tbody.innerHTML = paginatedProducts.map(product => `
+                    <tr>
+                        <td class="stt">${product.STT || ''}</td>
+                        <td><span class="group-tag">${product['NHÓM HÀNG'] || ''}</span></td>
+                        <td class="product-name">${product['TÊN HÀNG'] || ''}</td>
+                        <td><span class="unit">${product.ĐVT || ''}</span></td>
+                        <td class="price">${formatPrice(product[priceType] || 0)}</td>
+                    </tr>
+                `).join('');
+            }
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+            const currentPageSpan = document.getElementById('currentPage');
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            currentPageSpan.textContent = currentPage;
+        }
+
+        // Gửi form khi thay đổi select
+        document.getElementById('groupFilter').addEventListener('change', () => {
+            document.getElementById('filterForm').submit();
+        });
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderProducts();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderProducts();
+            }
+        });
+
+        renderProducts();
+
+        // Logo animation
+        const logo = document.getElementById('companyLogo');
+        logo.addEventListener('click', () => {
+            const newText = prompt('Nhập logo mới (tối đa 3 ký tự):');
+            if (newText && newText.length <= 3) {
+                logo.textContent = newText.toUpperCase();
+            }
+        });
+
+        // Company name editing
+        const companyName = document.getElementById('companyName');
+        companyName.addEventListener('click', () => {
+            const newName = prompt('Nhập tên công ty mới:');
+            if (newName) {
+                companyName.textContent = newName.toUpperCase();
+            }
+        });
