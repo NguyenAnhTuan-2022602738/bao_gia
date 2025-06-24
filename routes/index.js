@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product");
+const Product = require("../models/product"); // Sửa đường dẫn
 
 function getPriceTypeLabel(type) {
   switch (type) {
@@ -17,7 +17,6 @@ function getPriceTypeLabel(type) {
   }
 }
 
-// Hàm chuẩn hóa key về đúng định dạng
 function normalizeKeys(obj) {
   const keyMap = {
     "stt": "STT",
@@ -40,14 +39,13 @@ function normalizeKeys(obj) {
   return newObj;
 }
 
-// Hàm chuyển đổi chuỗi giá (có dấu phẩy) thành số
 function parsePrice(value) {
   if (typeof value === "string") {
-    const cleanValue = value.replace(/,/g, ''); // Xóa tất cả dấu phẩy
-    const num = parseFloat(cleanValue); // Chuyển đổi sang số
-    return isNaN(num) ? 0 : num; // Trả về 0 nếu không thể chuyển đổi
+    const cleanValue = value.replace(/,/g, '');
+    const num = parseFloat(cleanValue);
+    return isNaN(num) ? 0 : num;
   }
-  return parseFloat(value); // Nếu đã là số, giữ nguyên
+  return parseFloat(value);
 }
 
 router.get("/price/:type", async (req, res) => {
@@ -56,15 +54,13 @@ router.get("/price/:type", async (req, res) => {
     return res.status(400).send("Invalid price type");
   }
 
-  // Lấy tham số query từ bộ lọc
   const searchTerm = (req.query.search || '').toLowerCase();
   const selectedGroup = req.query.group || '';
 
   try {
-    let allProducts = await Product.find().lean(); // Lấy tất cả sản phẩm
+    let allProducts = await Product.find().lean();
     allProducts = allProducts.map(normalizeKeys);
 
-    // Lấy tất cả các nhóm từ database
     const allGroups = [...new Set(allProducts.map(p => p['NHÓM HÀNG']).filter(g => g))];
 
     let products = allProducts.map(product => {
@@ -73,7 +69,6 @@ router.get("/price/:type", async (req, res) => {
       return newProduct;
     });
 
-    // Áp dụng bộ lọc
     if (searchTerm || selectedGroup) {
       products = products.filter(product => {
         const matchesSearch = !searchTerm || 
@@ -103,7 +98,7 @@ router.get("/price/:type", async (req, res) => {
       totalProducts,
       totalGroups,
       averagePrice,
-      allGroups, // Truyền tất cả các nhóm
+      allGroups,
       searchTerm,
       selectedGroup,
     });
