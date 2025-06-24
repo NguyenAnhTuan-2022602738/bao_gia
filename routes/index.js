@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/product"); // Sửa đường dẫn
+const Product = require("/var/task/models/product"); // Sửa đường dẫn
 
 function getPriceTypeLabel(type) {
   switch (type) {
